@@ -94,18 +94,6 @@ This recipe shows how to debug a Ruby on Rails (without jRuby) application using
                 "args": [
                     "${file}"
                 ]
-            },
-            {
-              "name": "Debug RSpec - open spec file on a certain line",
-              "type": "Ruby",
-              "request": "launch",
-              "cwd": "${workspaceRoot}",
-              "useBundler": true,
-              "pathToBundler": "/path/to/rubygem/wrappers/bundle",
-              "pathToRDebugIDE": "/path/to/rubygem/gems/ruby-debug-ide-x.x.x/bin/rdebug-ide",
-              "debuggerPort": "1235",
-              "program": "/path/to/rubygem/bin/rspec",
-              "args": ["${file}:${lineNumber}"]
             }
         ]
     }
