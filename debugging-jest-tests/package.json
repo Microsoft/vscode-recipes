@@ -1,0 +1,13 @@
+{
+  "name": "vscode-recipes-debugging-jest-tests",
+  "version": "1.0.0",
+  "description": "This recipe shows how to use the built-in Node Debugger to debug Jest tests",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Jag Reehal",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "22.0.4"
+  }
+}

@@ -1,23 +1,21 @@
 # Electron debugging (main and renderer process)
 
-by [Kenneth Auchenberg](https://twitter.com/auchenberg)
+By [Kenneth Auchenberg](https://twitter.com/auchenberg)
 
-This recipe shows how to use the built-in Node Debugger and the [Debugger for Chrome](https://github.com/Microsoft/vscode-chrome-debug) extension with VS Code to debug [Electron](https://electron.atom.io) applications.
+This recipe shows how to use the built-in JavaScript deubgger in VS Code to debug [Electron](https://electron.atom.io) applications.
 
-[Electron](https://electron.atom.io) applications can consists of two process types: A Main process type running in NodeJS and a render process type in Chromium. This means that you'll need to use two debugger instances within VS Code to debug both processes. This is the reason for why you both the built-in Node Debugger and the [Debugger for Chrome](https://github.com/Microsoft/vscode-chrome-debug).
+[Electron](https://electron.atom.io) applications can consist of two process types: a main process type running in NodeJS, and a renderer process type in Chromium. This means that you'll need to use two debugger instances within VS Code to debug both processes.
 
-**Note:** Please make sure you are using **Electron 1.7.4 or newer**, as our debuggers relies on the Inspector protocol.
+**Note:** Please make sure you are using **Electron 1.7.4 or newer**, as our debuggers rely on the inspector protocol.
 
 ## Getting Started
 
-1. Make sure to have the latest version of VS Code installed.
+1. Make sure you're running the latest version of VS Code.
 
-2. Make sure to the latest version of [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) extension installed in VS Code.
-
-3. This guide assumes that you are using the [electron-Quick-start project](https://github.com/electron/electron-quick-start). Clone the repo to get started
-    > 
+2. This guide assumes that you are using the [electron-quick-start project](https://github.com/electron/electron-quick-start). Clone the repo to get started:
+    >
     ```
-    git clone git@github.com:electron/electron-quick-start.git
+    git clone https://github.com/electron/electron-quick-start.git
     cd electron-quick-start
     npm install
     code .
@@ -25,7 +23,7 @@ This recipe shows how to use the built-in Node Debugger and the [Debugger for Ch
 
 ## Configure launch.json File
 
-- Click on the Debugging icon in the Activity Bar to bring up the Debug view.
+- Click on the Debugging icon in the Activity Bar (or press Cmd/Ctrl+Shift+D) to bring up the Debug view.
 Then click on the gear icon to configure a launch.json file, selecting **Chrome** for the environment:
 
    ![configure_launch](configure_launch.png)
@@ -40,14 +38,13 @@ Then click on the gear icon to configure a launch.json file, selecting **Chrome*
                 "type": "node",
                 "request": "launch",
                 "name": "Electron: Main",
-                "protocol": "inspector",
-                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+                "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
                 "runtimeArgs": [
                     "--remote-debugging-port=9223",
                     "."
                 ],
                 "windows": {
-                    "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+                    "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
                 }
             },
             {
@@ -55,7 +52,7 @@ Then click on the gear icon to configure a launch.json file, selecting **Chrome*
                 "type": "chrome",
                 "request": "attach",
                 "port": 9223,
-                "webRoot": "${workspaceRoot}",
+                "webRoot": "${workspaceFolder}",
                 "timeout": 30000
             }
         ],
@@ -71,17 +68,17 @@ Then click on the gear icon to configure a launch.json file, selecting **Chrome*
     }
   ```
 
-  ## Debugging of the main process
-  
-  1. Go ahead and set a breakpoint in **main.js** on `line 16` within the `createWindow` function.
+## Debugging the Main Process
 
-  2. Go to the Debug view, select the **'Electron: Main'** configuration, then press F5 or click the green play button.
+ 1. Set a breakpoint in **main.js** on `line 16` within the `createWindow` function by clicking the gutter to the left of the line number.
 
-  3. VS Code should now attempt to start your Electron app, and your breakpoint on `line 16` in `main.js` should be hit.
+ 2. Go to the Debug view and select the **'Electron: Main'** configuration, then press F5 or click the green play button.
+
+ 3. VS Code should now attempt to start your Electron app, and your breakpoint on `line 16` in `main.js` should be hit.
 
 ![breakpoint-main](breakpoint_main.png)
 
-## Debugging of the renderer process
+## Debugging the Renderer Process
 
   1. Update the contents of `renderer.js` to
  ```javascript
@@ -96,22 +93,22 @@ Then click on the gear icon to configure a launch.json file, selecting **Chrome*
     test()
 ```
 
-  2. While your debug session is running you can go to the Debug view, select the **'Electron: Renderer'**, which will connect VS Code to the Electron renderer process. 
+  2. While your debug session is running, you can go to the Debug view and select the **'Electron: Renderer'** configuration, which will connect VS Code to the Electron renderer process.
 
-  3. When connected go to `renderer.js` and set a breakpoint on `line 6`
+  3. When connected, go to `renderer.js` and set a breakpoint on `line 6`.
 
-  4. Now go to your Electron app window and  reload the page (View -> reload or CMD+R) to make sure the breakpoints are set.
+  4. Now go to your Electron app window and reload the page (View -> Reload or Cmd/Ctrl+R) to make sure the breakpoints are set.
 
-  5. Your breakpoint in `renderer.js` on `line 6` should now be hit, and you can debug the Renderer process
+  5. Your breakpoint in `renderer.js` on `line 6` should now be hit, and you can debug the Renderer process.
 
 ![breakpoint-renderer](breakpoint_renderer.png)
 
-## Debugging of both processes at the same time
+## Debugging Both Processes Simultaneously
 
-Now that you have learned to debug both the Main and the Renderer process you can take advantage of our [`compounds configurations`](https://code.visualstudio.com/updates/v1_8#_multitarget-debugging) that enables you to start multiple debugging sessions at the same time. 
+Now that you have learned to debug both the Main and Renderer processes, you can take advantage of our [`compound configurations`](https://code.visualstudio.com/updates/v1_8#_multitarget-debugging) that enable you to start multiple debugging sessions at the same time.
 
-1. Go to the Debug view, select the **'Electron: All'**, which will connect VS Code to the both Main and Renderer process, and enable you to have a smooth development workflow.
+1. Go to the Debug view and select **'Electron: All'**, which will connect VS Code to both the Main and Renderer processes and enable you to have a smooth development workflow.
 2. Set breakpoints in any of the files like above.
-3. Party 🎉🔥 
+3. Party 🎉🔥
 
 

@@ -1,0 +1,14 @@
+{
+  "name": "vscode-recipes-debugging-mocha-tests",
+  "version": "1.0.0",
+  "description": "This recipe shows how to use the built-in Node Debugger to debug Mocha tests",
+  "scripts": {
+    "test": "mocha 'test/**/*.spec.js'"
+  },
+  "author": "Jag Reehal",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "4.1.2",
+    "mocha": "4.1.0"
+  }
+}

@@ -1,7 +1,0 @@
-// Place your settings in this file to overwrite default and user settings.
-{
-  "files.autoSave": "onFocusChange",
-  "editor.tabSize": 2,
-	"editor.detectIndentation": false,
-  "editor.insertSpaces": true
-}

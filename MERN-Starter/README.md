@@ -39,14 +39,8 @@ VS Code automatically detects a MERN based project and creates this launch confi
     "type": "node",
     "request": "launch",
     "name": "Launch Program",
-    "protocol": "inspector",
     "runtimeExecutable": "nodemon",
-    "runtimeArgs": [
-        "--inspect=9222"
-    ],
-    "program": "${workspaceRoot}/index.js",
-    "port": 9222,
-    "restart": true,
+    "program": "${workspaceFolder}/index.js",
     "env": {
         "BABEL_DISABLE_CACHE": "1",
         "NODE_ENV": "development"
@@ -63,7 +57,5 @@ Instead of the `node` runtime executable, `nodemon` is used which watches file m
 With this setup it is possible to edit the source while the server is running: source edits automatically trigger a rebuild and restart the server. Because these restarts are quite expensive, we recommend that you change VS Code's `files.autoSave` setting from `after delay` to one of the other values. With this saves no longer occur automatically.
 
 The launch config uses the integrated terminal because `nodemon` is an interactive tool that reads from stdin which is not supported in the default debug console.
-
-> **Please note**: there is an unfortunate redundancy (and potential inconsistency) between the `protocol`, `runtimeArgs`, and `port` attributes. If the value of `protocol` is changed to `legacy`, the values for `runtimeArgs` and `port` must be changed as well, otherwise a problematic inconsistency will occur. This redundancy can be eliminated after we have implemented this [feature](https://github.com/Microsoft/vscode/issues/26315) for the 'legacy' and the 'inspector' protocol.
 
 > **Please note**: Currently this recipe requires that "nodemon" is installed globally (despite the fact that it would be available in `node_modules/.bin`). This requirement will be lifted after we have implemented this [feature]( https://github.com/Microsoft/vscode/issues/28100).
